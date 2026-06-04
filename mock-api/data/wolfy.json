@@ -1,0 +1,25 @@
+{
+  "name": "Wolfy Casino",
+  "template": "wolfy",
+  "theme": {
+    "background": "#ffffff",
+    "text": "#000000"
+  },
+  "menu": [
+    { "id": "home", "label": "Home", "path": "/" },
+    { "id": "promotions", "label": "Promotions", "path": "/promotions" },
+    { "id": "support", "label": "Support", "path": "/support" }
+  ],
+  "sections": [
+    {
+      "id": "welcome",
+      "title": "Welcome to Wolfy Casino",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae justo nec lectus tristique facilisis. Sed at urna at lorem aliquet vehicula. Donec dignissim risus eu mauris dapibus, vitae cursus sapien tincidunt."
+    },
+    {
+      "id": "about",
+      "title": "About Us",
+      "body": "Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vestibulum id ligula porta felis euismod semper. Maecenas faucibus mollis interdum. Aenean lacinia bibendum nulla sed consectetur."
+    }
+  ]
+}
