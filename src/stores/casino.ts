@@ -13,17 +13,18 @@ export const useCasinoStore = defineStore('casino', () => {
 
   const sections = computed<MergedSection[]>(() => {
     if (!apiData.value || !config.value) return []
+    const apiSections = apiData.value.sections
     const sectionConfigs = config.value.sections ?? {}
 
-    const apiIds = new Set(apiData.value.sections.map(s => s.id))
+    const apiIds = new Set(apiSections.map(s => s.id))
 
     const standard: (MergedSection & { _order: number; _index: number })[] =
-      apiData.value.sections
+      apiSections
         .filter(s => sectionConfigs[s.id]?.visible !== false)
         .map((s, i) => ({
           id: s.id,
-          title: (sectionConfigs[s.id]?.overrides?.title as string | undefined) ?? s.title,
-          body: (sectionConfigs[s.id]?.overrides?.body as string | undefined) ?? s.body,
+          title: sectionConfigs[s.id]?.overrides?.title ?? s.title,
+          body: sectionConfigs[s.id]?.overrides?.body ?? s.body,
           _order: sectionConfigs[s.id]?.order ?? Infinity,
           _index: i,
         }))
@@ -35,7 +36,7 @@ export const useCasinoStore = defineStore('casino', () => {
           id,
           component: defineAsyncComponent(cfg.component!),
           _order: cfg.order ?? Infinity,
-          _index: apiData.value!.sections.length + i,
+          _index: apiSections.length + i,
         }))
 
     return [...standard, ...custom]

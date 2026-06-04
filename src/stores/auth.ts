@@ -6,7 +6,6 @@ import { setApiCredentials } from '@/api/client'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(null)
-  const ready = ref(false)
 
   async function init(apiKey: string): Promise<void> {
     const { data } = await axios.post<{ token: string }>(
@@ -16,8 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
     )
     token.value = data.token
     setApiCredentials(apiKey, data.token)
-    ready.value = true
   }
 
-  return { token, ready, init }
+  return { token, init }
 })
