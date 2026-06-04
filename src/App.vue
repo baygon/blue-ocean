@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed, defineAsyncComponent } from 'vue'
+import type { Component } from 'vue'
 import { useCasinoStore } from '@/stores/casino'
+
+const templateModules = import.meta.glob<{ default: Component }>('@/templates/*.vue')
+
+function resolveTemplate(name: string) {
+  const key = `/src/templates/${name.charAt(0).toUpperCase() + name.slice(1)}Template.vue`
+  const loader = templateModules[key]
+  return loader ? defineAsyncComponent(loader) : null
+}
 
 const casino = useCasinoStore()
 const error = ref<string | null>(null)
+
+const activeTemplate = computed(() => {
+  const name = casino.config?.template
+  if (!name) return null
+  return resolveTemplate(name)
+})
 
 onMounted(async () => {
   const tenant = new URLSearchParams(window.location.search).get('tenant')
@@ -21,6 +36,6 @@ onMounted(async () => {
 
 <template>
   <div v-if="error" style="padding: 1rem; color: red;">{{ error }}</div>
-  <RouterView v-else-if="casino.ready" />
+  <component :is="activeTemplate" v-else-if="casino.ready && activeTemplate" />
   <div v-else style="padding: 1rem;">Loading...</div>
 </template>

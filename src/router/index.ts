@@ -4,8 +4,12 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/:pathMatch(.*)*',
+      path: '/',
       component: () => import('@/views/PlaceholderView.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('@/views/DummyView.vue'),
     },
   ],
 })
