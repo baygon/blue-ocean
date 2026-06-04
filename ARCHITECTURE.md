@@ -74,6 +74,10 @@ sections: {
 
 `HomeView` detects `component` and renders it via `defineAsyncComponent`. The component is pre-resolved in the casino store so the view just uses `<component :is="section.component" />`. Custom sections are sorted and filtered the same way as standard ones.
 
+## API contract isolation
+
+Templates never access raw API data directly. The casino store exposes computed properties (`name`, `menu`, `theme`, `sidebar`) that templates consume. If the API shape changes, only the store needs updating. Templates are unaffected
+
 ## Trade-offs
 
 **Query param for tenant** (`?tenant=wolfy`) is fine for this task. In production it would be subdomain-based, resolved at the CDN level.

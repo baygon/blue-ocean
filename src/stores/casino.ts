@@ -43,6 +43,12 @@ export const useCasinoStore = defineStore('casino', () => {
       .map(({ _order: _o, _index: _i, ...s }) => s)
   })
 
+  const template = computed(() => config.value?.template)
+  const name = computed(() => apiData.value?.name)
+  const menu = computed(() => apiData.value?.menu ?? [])
+  const theme = computed(() => apiData.value?.theme)
+  const sidebar = computed(() => apiData.value?.sidebar)
+
   async function init(tenant: string): Promise<void> {
     const auth = useAuthStore()
     config.value = await loadCasinoConfig(tenant)
@@ -52,5 +58,5 @@ export const useCasinoStore = defineStore('casino', () => {
     ready.value = true
   }
 
-  return { config, apiData, sections, ready, init }
+  return { template, sections, name, menu, theme, sidebar, ready, init }
 })

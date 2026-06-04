@@ -15,7 +15,7 @@ const casino = useCasinoStore()
 const error = ref<string | null>(null)
 
 const activeTemplate = computed(() => {
-  const name = casino.config?.template
+  const name = casino.template
   if (!name) return null
   return resolveTemplate(name)
 })
@@ -35,7 +35,17 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="error" style="padding: 1rem; color: red;">{{ error }}</div>
+  <div v-if="error" class="state error">{{ error }}</div>
   <component :is="activeTemplate" v-else-if="casino.ready && activeTemplate" />
-  <div v-else style="padding: 1rem;">Loading...</div>
+  <div v-else class="state">Loading...</div>
 </template>
+
+<style scoped>
+.state {
+  padding: 1rem;
+}
+
+.error {
+  color: red;
+}
+</style>

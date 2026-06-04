@@ -8,16 +8,16 @@ const casino = useCasinoStore()
 <template>
   <div
     class="layout"
-    :style="{ '--bg': casino.apiData?.theme.background, '--color': casino.apiData?.theme.text }"
+    :style="{ '--bg': casino.theme?.background, '--color': casino.theme?.text }"
   >
     <header class="header">
-      <strong>{{ casino.apiData?.name }}</strong>
+      <strong>{{ casino.name }}</strong>
       <input type="text" placeholder="Search..." />
     </header>
 
     <nav class="subnav">
       <RouterLink
-        v-for="item in casino.apiData?.menu"
+        v-for="item in casino.menu"
         :key="item.id"
         :to="item.path"
         class="nav-link"

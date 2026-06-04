@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
-import { BASE_URL, setApiCredentials } from '@/api/client'
+import { BASE_URL } from '@/api/config'
+import { setApiCredentials } from '@/api/client'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(null)
