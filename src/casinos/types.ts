@@ -2,6 +2,13 @@ import type { Component } from 'vue'
 
 export type TemplateName = 'wolfy' | 'pantaloo'
 
+export interface MergedSection {
+  id: string
+  title?: string
+  body?: string
+  component?: Component
+}
+
 export interface SectionConfig {
   visible?: boolean
   order?: number
