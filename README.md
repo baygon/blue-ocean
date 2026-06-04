@@ -1,5 +1,40 @@
-# Vue 3 + TypeScript + Vite
+# BlueOcean Gaming
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+White-label casino SPA. Multiple casino brands, one codebase, one build.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Vue 3, Vite, Pinia, TypeScript.
+
+## Run
+
+**Mock API** (terminal 1)
+```bash
+cd mock-api && npm install && npm start
+```
+
+**App** (terminal 2)
+```bash
+npm install && npm run dev
+```
+
+## Casinos
+
+Tenant is resolved from the `?tenant=` query param.
+
+Wolfy: `http://localhost:5173/?tenant=wolfy`
+
+Pantaloo: `http://localhost:5173/?tenant=pantaloo`
+
+## Structure
+
+```
+src/
+  api/          axios client, API types
+  casinos/      per-casino configs, registry
+  stores/       auth, casino (Pinia)
+  templates/    WolfyTemplate, PantalooTemplate
+  views/        HomeView, DummyView
+  router/
+mock-api/       Express mock API
+```
+
+See `ARCHITECTURE.md` for design decisions.
