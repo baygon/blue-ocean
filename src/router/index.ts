@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/views/PlaceholderView.vue'),
+      component: () => import('@/views/HomeView.vue'),
     },
     {
       path: '/:pathMatch(.*)*',

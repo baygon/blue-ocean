@@ -5,8 +5,8 @@ const config: CasinoConfig = {
   apiKey: 'wolfykey',
   template: 'wolfy',
   sections: {
-    welcome: { order: 1 },
-    about: { order: 2 },
+    welcome: { order: 2, overrides: { title: 'Test' } },
+    about: { order: 1 },
   },
 }
 
