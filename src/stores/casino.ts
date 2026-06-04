@@ -22,6 +22,7 @@ export const useCasinoStore = defineStore('casino', () => {
       apiSections
         .filter(s => sectionConfigs[s.id]?.visible !== false)
         .map((s, i) => ({
+          kind: 'standard' as const,
           id: s.id,
           title: sectionConfigs[s.id]?.overrides?.title ?? s.title,
           body: sectionConfigs[s.id]?.overrides?.body ?? s.body,
@@ -33,6 +34,7 @@ export const useCasinoStore = defineStore('casino', () => {
       Object.entries(sectionConfigs)
         .filter(([id, cfg]) => !apiIds.has(id) && cfg.component && cfg.visible !== false)
         .map(([id, cfg], i) => ({
+          kind: 'custom' as const,
           id,
           component: defineAsyncComponent(cfg.component!),
           _order: cfg.order ?? Infinity,

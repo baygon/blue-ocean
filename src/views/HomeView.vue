@@ -7,7 +7,7 @@ const casino = useCasinoStore()
 <template>
   <div class="home">
     <template v-for="section in casino.sections" :key="section.id">
-      <component :is="section.component" v-if="section.component" />
+      <component :is="section.component" v-if="section.kind === 'custom'" />
       <section v-else class="section">
         <h2>{{ section.title }}</h2>
         <p>{{ section.body }}</p>

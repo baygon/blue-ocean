@@ -37,6 +37,9 @@ onMounted(async () => {
 <template>
   <div v-if="error" class="state error">{{ error }}</div>
   <component :is="activeTemplate" v-else-if="casino.ready && activeTemplate" />
+  <div v-else-if="casino.ready" class="state error">
+    Unknown template: "{{ casino.template }}"
+  </div>
   <div v-else class="state">Loading...</div>
 </template>
 

@@ -51,8 +51,8 @@ sections: {
     // default true
     order?: number
     // lower = first
-    overrides?: Record<string, unknown>
-    // overrides API fields
+    overrides?: Partial<Pick<Section, 'title' | 'body'>>
+    // typed against the API Section, so typos are caught
     component?: () => Promise<{ default: Component }>
     // custom section
   }
@@ -72,11 +72,11 @@ sections: {
 }
 ```
 
-`HomeView` detects `component` and renders it via `defineAsyncComponent`. The component is pre-resolved in the casino store so the view just uses `<component :is="section.component" />`. Custom sections are sorted and filtered the same way as standard ones.
+The casino store merges API data and config into a `MergedSection` discriminated union. Either `{ kind: 'standard', title, body }` or `{ kind: 'custom', component }`. `HomeView` branches on `kind`, so the view is type-safe (no reading `title` off a custom section). Custom components are pre-resolved via `defineAsyncComponent` in the store and sorted/filtered the same way as standard ones.
 
 ## API contract isolation
 
-Templates never access raw API data directly. The casino store exposes computed properties (`name`, `menu`, `theme`, `sidebar`) that templates consume. If the API shape changes, only the store needs updating. Templates are unaffected
+Templates never access raw API data directly. The casino store exposes computed properties (`name`, `menu`, `theme`, `sidebar`, `template`) that templates consume. If the API shape changes, only the store needs updating. Templates are unaffected.
 
 ## Trade-offs
 
@@ -86,7 +86,7 @@ Templates never access raw API data directly. The casino store exposes computed 
 
 **Manual casino registry** is explicit and type-safe. At 100+ casinos, `import.meta.glob` could replace it the same way templates work, trading explicitness for zero maintenance.
 
-**Explicit override fields** — `overrides` only applies `title` and `body` explicitly, not a blind spread. Safe and type-correct, but if `Section` grows a new field it needs to be wired manually. A blind spread would pick it up automatically but loses type safety.
+**Explicit override fields** — `overrides` is typed as `Partial<Pick<Section, 'title' | 'body'>>` and applied field by field, so typos and wrong types are caught at compile time. The cost is that adding a new overridable field means widening the type and wiring it in the store. A blind spread would pick new fields up automatically but loses that safety.
 
 **One template vs many** — Wolfy and Pantaloo could technically be one template with a layout flag. They're kept separate intentionally. Each template is a distinct layout archetype. Merging them means every new layout requires modifying an existing file, which breaks the extension point. The header is duplicated across templates. A shared `CasinoHeader.vue` component would clean that up.
 

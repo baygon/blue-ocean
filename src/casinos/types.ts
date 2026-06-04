@@ -3,12 +3,11 @@ import type { Section } from '@/api/types'
 
 export type TemplateName = 'wolfy' | 'pantaloo'
 
-export interface MergedSection {
-  id: string
-  title?: string
-  body?: string
-  component?: Component
-}
+// A section is either standard (title/body from the API) or custom (a
+// casino-supplied component). The `kind` discriminant lets the view narrow.
+export type MergedSection =
+  | { kind: 'standard'; id: string; title: string; body: string }
+  | { kind: 'custom'; id: string; component: Component }
 
 // Casino-authored overrides for a section's renderable content.
 // Typed against the API Section so typos and wrong fields are caught.
@@ -22,7 +21,6 @@ export interface SectionConfig {
 }
 
 export interface CasinoConfig {
-  tenant: string
   apiKey: string
   template: TemplateName
   sections?: Record<string, SectionConfig>
